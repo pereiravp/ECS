@@ -1,0 +1,25 @@
+# Compilados Java
+*.class
+
+# Build tools (Maven / Gradle)
+target/
+build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Logs e temporários
+*.log
+*.tmp
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+bin/
+
+# Sistema
+.DS_Store
+Thumbs.db
