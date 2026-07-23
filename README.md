@@ -1,4 +1,5 @@
 # Elevator Control Simulator
+[![CI](https://github.com/pereiravp/ECS/actions/workflows/ci.yml/badge.svg)](https://github.com/pereiravp/ECS/actions/workflows/ci.yml)
 
 A discrete simulation of an elevator control system, written in Java and built with Maven. The model enforces safety invariants on every state transition and implements a directional scan policy for scheduling pending floor requests.
 

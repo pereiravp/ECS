@@ -113,6 +113,13 @@ public class ElevadorTest {
     }
 
     @Test
+    public void pedidoParaAndarInvalidoEIgnorado() {
+        Elevador e = new Elevador(-1, 10);
+        e.adicionarPedido(50);
+        assertTrue(e.getPedidos().isEmpty());
+    }
+
+    @Test
     public void passoServePrimeiroOAndarPeloCaminho() {
         Elevador e = new Elevador(-1, 10);
         e.adicionarPedido(5);
