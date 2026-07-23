@@ -1,22 +1,34 @@
 package com.pereira.elevador;
+
+import java.security.PublicKey;
+import java.util.TreeSet;
+
 public class Elevador{
 
     private int andar;
     private Estado estado;
+    private int andarMinimo;
+    private int andarMaximo;
+    private Direcao direcao;
+    private TreeSet<Integer> pedidos;
 
     // Construtor
-    public Elevador(){
+    public Elevador(int andarMinimo, int andarMaximo){
         andar = 0;
         estado = Estado.PARADO;
+        this.andarMinimo = andarMinimo;
+        this.andarMaximo = andarMaximo;
+        this.direcao = Direcao.SUBIR;
+        pedidos = new TreeSet<>();
     }
 
-    // métodos
+    // métodos básicos
     public void subir (int N){
         int andarInicial = andar;
-
+        if(!andarValido(N)) return;
         // Verificações de Segurança
         if(estado == Estado.PORTAS_ABERTAS) return;
-        if(andarInicial >= N) return;
+        if(andar >= N) return;
 
         estado = Estado.A_SUBIR;
             for(int i = 0; i < N - andarInicial; i++){
@@ -27,10 +39,10 @@ public class Elevador{
 
     public void descer (int N){
         int andarInicial = andar;
-
+        if(!andarValido(N)) return;
         // Verificações de Segurança
         if(estado == Estado.PORTAS_ABERTAS) return;
-        if(andarInicial <= N) return;
+        if(andar <= N) return;
 
         estado = Estado.A_DESCER;
             for(int i = 0; i < andarInicial-N; i++){
@@ -54,6 +66,43 @@ public class Elevador{
         else if (N < andar) descer(N);
     }
 
+    // metodos ligeiramente mais complexos
+
+    public void adicionarPedido(int andar){
+        if(!andarValido(andar)) return;
+        this.pedidos.add(andar);
+    }
+
+    public Integer proximoDestino(){
+        if (this.pedidos.isEmpty()) return null;
+
+        if(direcao == Direcao.SUBIR){
+            Integer acima = pedidos.higher(andar);
+            if(acima != null) return acima;
+            direcao = Direcao.DESCER;
+            return pedidos.lower(andar);
+        }
+        else {
+            Integer abaixo = pedidos.lower(andar);
+            if(abaixo != null) return abaixo;
+            direcao = Direcao.SUBIR;
+            return pedidos.higher(andar);
+        }
+    }
+
+    public void passo(){
+        Integer destino = proximoDestino();
+        if(destino == null) return;
+
+        irPara(destino);
+        pedidos.remove(destino);
+    }
+
+    // métodos auxiliar de verificação
+    private boolean andarValido(int N){
+    return N >= andarMinimo && N <= andarMaximo;
+    }
+
     // GETTERS
     public int getAndar(){
         return this.andar;
@@ -61,5 +110,4 @@ public class Elevador{
     public Estado getEstado(){
         return this.estado;
     }
-
 }
