@@ -1,25 +1,46 @@
-# Compilados Java
+# Compiled Java
 *.class
+*.jar
+*.war
+*.ear
 
-# Build tools (Maven / Gradle)
+# Maven
 target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+!/.mvn/wrapper/maven-wrapper.properties
+
+# Gradle
 build/
 .gradle/
-!gradle/wrapper/gradle-wrapper.jar
 
-# Logs e temporários
+# Logs and temporary files
 *.log
 *.tmp
+hs_err_pid*
+replay_pid*
 
 # IDEs
 .vscode/
 .idea/
 *.iml
+*.ipr
+*.iws
 .project
 .classpath
 .settings/
 bin/
+nbproject/
+.nb-gradle/
 
-# Sistema
+# OS
 .DS_Store
 Thumbs.db
+desktop.ini
