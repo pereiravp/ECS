@@ -110,4 +110,11 @@ public class Elevador{
     public Estado getEstado(){
         return this.estado;
     }
+
+    public Direcao getDirecao(){
+        return this.direcao;
+    }
+    public TreeSet<Integer> getPedidos() {
+        return new TreeSet<>(pedidos);
+    }
 }

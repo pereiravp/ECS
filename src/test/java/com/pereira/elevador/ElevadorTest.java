@@ -2,6 +2,7 @@ package com.pereira.elevador;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ElevadorTest {
 
@@ -122,5 +123,19 @@ public class ElevadorTest {
         e.adicionarPedido(2);
         e.passo();
         assertEquals(2, e.getAndar());
+    }
+
+    @Test
+    public void recebePedidoParaElevador(){
+        Elevador e = new Elevador(-1,10);
+        e.adicionarPedido(3);
+        assertTrue(e.getPedidos().contains(3));
+    }
+
+    @Test
+    public void edificioComElevadorRecebidoPedido(){
+        Edificio edificio = new Edificio(2, -1, 10);
+        edificio.atribuirPedido(3);
+        assertTrue(edificio.getElevadores().get(0).getPedidos().contains(3));
     }
 }
