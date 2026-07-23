@@ -13,6 +13,9 @@ public class Elevador{
     // métodos
     public void subir (int N){
         int andarInicial = andar;
+
+        // Verificações de Segurança
+        if(estado == Estado.PORTAS_ABERTAS) return;
         if(andarInicial >= N) return;
 
         estado = Estado.A_SUBIR;
@@ -24,6 +27,9 @@ public class Elevador{
 
     public void descer (int N){
         int andarInicial = andar;
+
+        // Verificações de Segurança
+        if(estado == Estado.PORTAS_ABERTAS) return;
         if(andarInicial <= N) return;
 
         estado = Estado.A_DESCER;
@@ -31,6 +37,21 @@ public class Elevador{
                 andar--;
             }
         estado = Estado.PARADO;
+    }
+
+    public void abrirPortas(){
+    if(estado != Estado.PARADO) return;
+    estado = Estado.PORTAS_ABERTAS;
+    }
+
+    public void fecharPortas(){
+        if(estado != Estado.PORTAS_ABERTAS) return;
+        estado = Estado.PARADO;
+    }
+
+    public void irPara(int N){
+        if (N > andar) subir(N);
+        else if (N < andar) descer(N);
     }
 
     // GETTERS
