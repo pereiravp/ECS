@@ -4,16 +4,6 @@ A discrete simulation of an elevator control system, written in Java and built w
 
 Personal project, built on the object-oriented foundations of the Programação Orientada aos Objetos course and extended into areas the coursework did not cover: safety-critical modelling, invariant enforcement, and an automated test suite with Maven and JUnit 5.
 
-```mermaid
-stateDiagram-v2
-    [*] --> PARADO
-    PARADO --> A_SUBIR: subir(N), N > andar
-    PARADO --> A_DESCER: descer(N), N < andar
-    PARADO --> PORTAS_ABERTAS: abrirPortas()
-    A_SUBIR --> PARADO: arrival
-    A_DESCER --> PARADO: arrival
-    PORTAS_ABERTAS --> PARADO: fecharPortas()
-```
 
 ## Domain model
 
