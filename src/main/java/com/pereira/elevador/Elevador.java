@@ -1,119 +1,128 @@
 package com.pereira.elevador;
 
-import java.security.PublicKey;
 import java.util.TreeSet;
 
-public class Elevador{
+public class Elevador {
+
+    // Campos
 
     private int andar;
     private Estado estado;
+    private Direcao direcao;
     private int andarMinimo;
     private int andarMaximo;
-    private Direcao direcao;
     private TreeSet<Integer> pedidos;
 
     // Construtor
-    public Elevador(int andarMinimo, int andarMaximo){
-        andar = 0;
-        estado = Estado.PARADO;
+
+    public Elevador(int andarMinimo, int andarMaximo) {
         this.andarMinimo = andarMinimo;
         this.andarMaximo = andarMaximo;
+        this.andar = 0;
+        this.estado = Estado.PARADO;
         this.direcao = Direcao.SUBIR;
-        pedidos = new TreeSet<>();
+        this.pedidos = new TreeSet<>();
     }
 
-    // métodos básicos
-    public void subir (int N){
+    // Movimento
+
+    public void subir(int N) {
         int andarInicial = andar;
-        if(!andarValido(N)) return;
-        // Verificações de Segurança
-        if(estado == Estado.PORTAS_ABERTAS) return;
-        if(andar >= N) return;
+
+        if (!andarValido(N)) return;
+        if (estado == Estado.PORTAS_ABERTAS) return;
+        if (andar >= N) return;
 
         estado = Estado.A_SUBIR;
-            for(int i = 0; i < N - andarInicial; i++){
-                andar++;
-            }
+        for (int i = 0; i < N - andarInicial; i++) {
+            andar++;
+        }
         estado = Estado.PARADO;
     }
 
-    public void descer (int N){
+    public void descer(int N) {
         int andarInicial = andar;
-        if(!andarValido(N)) return;
-        // Verificações de Segurança
-        if(estado == Estado.PORTAS_ABERTAS) return;
-        if(andar <= N) return;
+
+        if (!andarValido(N)) return;
+        if (estado == Estado.PORTAS_ABERTAS) return;
+        if (andar <= N) return;
 
         estado = Estado.A_DESCER;
-            for(int i = 0; i < andarInicial-N; i++){
-                andar--;
-            }
+        for (int i = 0; i < andarInicial - N; i++) {
+            andar--;
+        }
         estado = Estado.PARADO;
     }
 
-    public void abrirPortas(){
-    if(estado != Estado.PARADO) return;
-    estado = Estado.PORTAS_ABERTAS;
-    }
-
-    public void fecharPortas(){
-        if(estado != Estado.PORTAS_ABERTAS) return;
-        estado = Estado.PARADO;
-    }
-
-    public void irPara(int N){
+    public void irPara(int N) {
         if (N > andar) subir(N);
         else if (N < andar) descer(N);
     }
 
-    // metodos ligeiramente mais complexos
+    // Portas
 
-    public void adicionarPedido(int andar){
-        if(!andarValido(andar)) return;
-        this.pedidos.add(andar);
+    public void abrirPortas() {
+        if (estado != Estado.PARADO) return;
+        estado = Estado.PORTAS_ABERTAS;
     }
 
-    public Integer proximoDestino(){
-        if (this.pedidos.isEmpty()) return null;
+    public void fecharPortas() {
+        if (estado != Estado.PORTAS_ABERTAS) return;
+        estado = Estado.PARADO;
+    }
 
-        if(direcao == Direcao.SUBIR){
+    // Pedidos e escalonamento
+
+    public void adicionarPedido(int andarPedido) {
+        if (!andarValido(andarPedido)) return;
+        pedidos.add(andarPedido);
+    }
+
+    public Integer proximoDestino() {
+        if (pedidos.isEmpty()) return null;
+
+        if (direcao == Direcao.SUBIR) {
             Integer acima = pedidos.higher(andar);
-            if(acima != null) return acima;
+            if (acima != null) return acima;
+            // nada acima: inverte e serve o mais próximo abaixo
             direcao = Direcao.DESCER;
             return pedidos.lower(andar);
-        }
-        else {
+        } else {
             Integer abaixo = pedidos.lower(andar);
-            if(abaixo != null) return abaixo;
+            if (abaixo != null) return abaixo;
             direcao = Direcao.SUBIR;
             return pedidos.higher(andar);
         }
     }
 
-    public void passo(){
+    public void passo() {
         Integer destino = proximoDestino();
-        if(destino == null) return;
+        if (destino == null) return;
 
         irPara(destino);
         pedidos.remove(destino);
     }
 
-    // métodos auxiliar de verificação
-    private boolean andarValido(int N){
-    return N >= andarMinimo && N <= andarMaximo;
+    // Validação
+
+    private boolean andarValido(int N) {
+        return N >= andarMinimo && N <= andarMaximo;
     }
 
-    // GETTERS
-    public int getAndar(){
-        return this.andar;
-    }
-    public Estado getEstado(){
-        return this.estado;
+    // Getters
+
+    public int getAndar() {
+        return andar;
     }
 
-    public Direcao getDirecao(){
-        return this.direcao;
+    public Estado getEstado() {
+        return estado;
     }
+
+    public Direcao getDirecao() {
+        return direcao;
+    }
+
     public TreeSet<Integer> getPedidos() {
         return new TreeSet<>(pedidos);
     }
