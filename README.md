@@ -91,7 +91,7 @@ src/test/java/com/pereira/elevador/
     ElevadorTest.java JUnit 5 test suite
 ```
 
-## Possible extensions
+## Possible extensions (IN DEVELOPMENT)
 
 - Advance travel one floor per simulation tick, allowing requests to be picked up in transit
 - Weight and capacity limits as a further safety invariant
