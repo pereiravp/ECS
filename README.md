@@ -78,6 +78,8 @@ Written with JUnit 5, covering movement, state transitions, boundary validation,
 
 ## Project layout
 
+The nested src/main/java and com/pereira/elevador directories are the standard Maven layout and Java package convention respectively; the package name must mirror the directory path.
+
 ```
 src/main/java/com/pereira/elevador/
     Elevador.java     elevator state, movement and scheduling
