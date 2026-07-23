@@ -8,14 +8,10 @@ public class Edificio {
     // Campos
 
     private List<Elevador> elevadores;
-    private int andarMinimo;
-    private int andarMaximo;
 
     // Construtor
 
     public Edificio(int numeroElevadores, int andarMinimo, int andarMaximo) {
-        this.andarMinimo = andarMinimo;
-        this.andarMaximo = andarMaximo;
         this.elevadores = new ArrayList<>();
 
         for (int i = 0; i < numeroElevadores; i++) {
