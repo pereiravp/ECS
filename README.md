@@ -16,16 +16,16 @@ no matter what commands arrive. This project models both.
 
 ## Safety invariants (enforced on every transition)
 
-- The car never moves while the door is open.
+- The cabin never moves while the door is open.
 - The door never opens between floors.
-- The car never travels beyond the lowest or highest floor.
+- The cabin never travels beyond the lowest or highest floor.
 - Every accepted request is eventually served (no starvation).
 
 Unsafe commands are refused, not silently ignored.
 
 ## Core features (v1)
 
-- Discrete, tick-based simulation of car state (floor, direction, door).
+- Discrete, tick-based simulation of cabin state (floor, direction, door).
 - SCAN scheduling: serve requests in the current direction before
   reversing.
 - Command validation layer that rejects unsafe inputs.
@@ -50,7 +50,7 @@ mvn test
 - [ ] v1: single elevator, SCAN, invariants, JUnit suite
 - [ ] Request generation / simple simulation driver
 - [ ] Metrics: average wait time, total travel distance
-- [ ] (future) Concurrency: multiple cars, thread-safe dispatch
+- [ ] (future) Concurrency: multiple cabins, thread-safe dispatch
 - [ ] (future) Security layer — separate follow-up project
 
 ## Author
