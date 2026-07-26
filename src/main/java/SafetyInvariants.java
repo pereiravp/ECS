@@ -1,4 +1,3 @@
-package src.main.java;
 public class SafetyInvariants {
 
     public boolean doorClosedWhileMoving(ElevatorState before, ElevatorState after){
