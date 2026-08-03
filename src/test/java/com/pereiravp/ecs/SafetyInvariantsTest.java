@@ -15,4 +15,22 @@ class SafetyInvariantsTest {
         assertFalse(inv.doorClosedWhileMoving(before, after),
                 "moving between floors with the door open must be rejected");
     }
+
+    @Test
+    void allowsMovementWithClosedDoor() {
+        var before = new ElevatorState(2, Direction.UP, DoorState.CLOSED);
+        var after = new ElevatorState(3, Direction.UP, DoorState.CLOSED);
+
+        assertTrue(inv.doorClosedWhileMoving(before, after),
+                "moving between floors with the door closed must be allowed");
+    }
+
+    @Test
+    void allowsOpenDoorWhileStationary() {
+        var before = new ElevatorState(2, Direction.IDLE, DoorState.CLOSED);
+        var after = new ElevatorState(2, Direction.IDLE, DoorState.OPEN);
+
+        assertTrue(inv.doorClosedWhileMoving(before, after),
+                "opening the door while stationary must be allowed");
+    }
 }
