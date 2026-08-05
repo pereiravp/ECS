@@ -10,4 +10,9 @@ public class SafetyInvariants {
 
         return !(moved && doorOpen);
     }
+
+    public boolean floorWithinBounds(ElevatorState state, BuildingConfig config) {
+        return state.floor() >= config.minFloor()
+                && state.floor() <= config.maxFloor();
+    }
 }

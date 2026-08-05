@@ -33,4 +33,13 @@ class SafetyInvariantsTest {
         assertTrue(inv.doorClosedWhileMoving(before, after),
                 "opening the door while stationary must be allowed");
     }
+
+    @Test
+    void rejectsDoorOpeningWhileMoving(){
+        var before = new ElevatorState(2, Direction.UP, DoorState.CLOSED);
+        var after = new ElevatorState(3, Direction.UP,DoorState.OPEN);
+
+        assertFalse(inv.doorClosedWhileMoving(before, after),
+            "opening the door during movement must be rejected");
+    }
 }
