@@ -16,13 +16,6 @@ The idea comes from [florinpop17/app-ideas](https://github.com/florinpop17/app-i
 where it sits in the advanced tier as an exercise in event handling. I took the same
 problem and pointed it elsewhere.
 
-What interests me about an elevator is that certain things must *never* happen: the doors
-must not be open while the car is moving, the car must not travel past the top floor.
-Those aren't features to add later — they're the constraints the rest of the design lives
-inside. Practising that means separating what the system *decides* from what it must never
-do, modelling state so invalid states can't be constructed at all, and testing properties
-over thousands of generated cases instead of hoping I picked the right examples by hand.
-
 It also builds on ground I'd already covered. My [smart home system](https://github.com/pereiravp/POO)
 for an OOP course was the same shape of problem — discrete state, a clock, actions that
 change the world — with the safety dimension missing. Same intuition, new discipline.
