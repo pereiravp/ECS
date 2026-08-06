@@ -64,26 +64,6 @@ build passes with zero tests.
 
 ---
 
-### Modelling assumptions
-
-**A transition is a single atomic tick.** Each transition applies exactly one action from
-a closed set — open door, close door, move one floor up, move one floor down, or idle.
-No action changes both the car's position and the door state.
-
-This is a deliberate choice, and it has consequences. Going from an open door on floor 2
-to floor 3 is not one transition but two: close the door, then move. A transition where
-the floor changes and either door state is open is therefore always a violation — either
-the system performed two actions in one tick, or it moved with the door open. Both are
-rejected.
-
-The alternative model, where a transition spans an interval during which several things
-happen, would make this case legal but makes safety properties considerably harder to
-verify: the invariant layer would have to reason about orderings within the interval
-rather than about a single before/after pair.
-
-This assumption also defines the alphabet used by the property-based tests — random
-command sequences are drawn from the closed set of actions above.
-
 ## Roadmap
 
 - [x] State model as immutable records
