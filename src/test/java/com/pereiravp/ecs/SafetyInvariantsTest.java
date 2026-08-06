@@ -35,11 +35,61 @@ class SafetyInvariantsTest {
     }
 
     @Test
-    void rejectsDoorOpeningWhileMoving(){
+    void rejectsDoorOpeningWhileMoving() {
         var before = new ElevatorState(2, Direction.UP, DoorState.CLOSED);
-        var after = new ElevatorState(3, Direction.UP,DoorState.OPEN);
+        var after = new ElevatorState(3, Direction.UP, DoorState.OPEN);
 
         assertFalse(inv.doorClosedWhileMoving(before, after),
-            "opening the door during movement must be rejected");
+                "opening the door during movement must be rejected");
+    }
+
+    @Test
+    void acceptsFloorWithinBounds() {
+        var elevator = new ElevatorState(4, Direction.IDLE, DoorState.CLOSED);
+
+        var bounds = new BuildingConfig(0, 5);
+
+        assertTrue(inv.floorWithinBounds(elevator, bounds),
+                "a floor inside the building range must be valid");
+    }
+
+    @Test
+    void acceptsFloorAtUpperBound() {
+        var elevator = new ElevatorState(5, Direction.IDLE, DoorState.CLOSED);
+
+        var bounds = new BuildingConfig(0, 5);
+
+        assertTrue(inv.floorWithinBounds(elevator, bounds),
+                "the upper bound is inclusive — the top floor is valid");
+    }
+
+    @Test
+    void rejectsFloorAboveBounds() {
+        var elevator = new ElevatorState(6, Direction.IDLE, DoorState.CLOSED);
+
+        var bounds = new BuildingConfig(0, 5);
+
+        assertFalse(inv.floorWithinBounds(elevator, bounds),
+                "a floor above the building range must be rejected");
+    }
+
+    @Test
+    void acceptsFloorAtLowerBound() {
+        var elevator = new ElevatorState(0, Direction.IDLE, DoorState.CLOSED);
+
+        var bounds = new BuildingConfig(0, 5);
+
+        assertTrue(inv.floorWithinBounds(elevator, bounds),
+                "the lower bound is inclusive - the bottom floor is valid");
+    }
+
+    @Test
+    void rejectsFloorUnderBounds() {
+        var elevator = new ElevatorState(-1, Direction.IDLE, DoorState.CLOSED);
+
+        var bounds = new BuildingConfig(0, 5);
+
+        assertFalse(inv.floorWithinBounds(elevator, bounds),
+                "a floor under the building must be rejected");
     }
 }
