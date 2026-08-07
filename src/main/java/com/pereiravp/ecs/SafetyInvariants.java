@@ -15,4 +15,5 @@ public class SafetyInvariants {
         return state.floor() >= config.minFloor()
                 && state.floor() <= config.maxFloor();
     }
+
 }
