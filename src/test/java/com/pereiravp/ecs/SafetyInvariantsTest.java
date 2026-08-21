@@ -92,4 +92,24 @@ class SafetyInvariantsTest {
         assertFalse(inv.floorWithinBounds(elevator, bounds),
                 "a floor under the building must be rejected");
     }
+
+    @Test
+    void acceptsSafeTransition() {
+        var before = new ElevatorState(2, Direction.IDLE, DoorState.CLOSED);
+        var candidate = new ElevatorState(3, Direction.IDLE, DoorState.CLOSED);
+        var bounds = new BuildingConfig(0, 5);
+
+        assertTrue(inv.isSafeTransition(before, candidate, bounds),
+                "if all safeInvariants are respected it should be accepted");
+    }
+
+    @Test
+    void rejectsTransitionOutOfBounds() {
+        var before = new ElevatorState(5, Direction.IDLE, DoorState.CLOSED);
+        var candidate = new ElevatorState(6, Direction.IDLE, DoorState.CLOSED);
+        var bounds = new BuildingConfig(0, 5);
+
+        assertFalse(inv.isSafeTransition(before, candidate, bounds),
+                "if the safetyInvariants is not respected as it should, the candidate is rejected");
+    }
 }

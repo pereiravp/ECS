@@ -16,4 +16,7 @@ public class SafetyInvariants {
                 && state.floor() <= config.maxFloor();
     }
 
+    public boolean isSafeTransition(ElevatorState before, ElevatorState candidate, BuildingConfig config) {
+        return floorWithinBounds(candidate, config) && doorClosedWhileMoving(before, candidate);
+    }
 }

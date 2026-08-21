@@ -50,6 +50,7 @@ class TransitionsTest {
         var esperado = new ElevatorState(2, Direction.IDLE, DoorState.CLOSED);
         var obtido = Transitions.next(inicial, Action.IDLE);
 
-        assertEquals(esperado, obtido, "IDLE must leave the floor, direction and door unchanged");
+        assertEquals(esperado, obtido,
+                "IDLE must leave the floor, direction and door unchanged");
     }
 }
